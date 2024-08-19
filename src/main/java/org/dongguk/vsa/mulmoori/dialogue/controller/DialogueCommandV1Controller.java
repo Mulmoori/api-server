@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/dialogues")
+@RequestMapping("/api/v1/dialogues")
 public class DialogueCommandV1Controller {
 
     private final CreateDialogueUseCase createDialogueUseCase;
