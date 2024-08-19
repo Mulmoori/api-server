@@ -34,7 +34,9 @@ public class CreateUserNarooteoService implements CreateUserNarooteoUseCase {
 
         // 2. 권한 확인
         userNarooteoRepository.findByUserAndNarooteo(requestUser, narooteo)
-                .orElseThrow(() -> new CommonException(ErrorCode.DUPLICATED_RESOURCE));
+                .ifPresent(userNarooteo -> {
+                    throw new CommonException(ErrorCode.DUPLICATED_RESOURCE);
+                });
 
         // 3. 나루터 참여자 추가
         userNarooteoRepository.save(
