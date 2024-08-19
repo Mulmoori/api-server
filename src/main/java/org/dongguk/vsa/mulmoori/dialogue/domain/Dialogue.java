@@ -92,4 +92,8 @@ public class Dialogue {
 
         this.repliedAt = LocalDateTime.now();
     }
+
+    public void updateStatus(EDialogueStatus status) {
+        this.status = status;
+    }
 }

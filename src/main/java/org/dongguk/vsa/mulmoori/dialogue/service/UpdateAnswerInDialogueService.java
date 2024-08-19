@@ -3,6 +3,7 @@ package org.dongguk.vsa.mulmoori.dialogue.service;
 import lombok.RequiredArgsConstructor;
 import org.dongguk.vsa.mulmoori.core.exception.error.ErrorCode;
 import org.dongguk.vsa.mulmoori.core.exception.type.CommonException;
+import org.dongguk.vsa.mulmoori.core.utility.AnalysisUtil;
 import org.dongguk.vsa.mulmoori.dialogue.domain.Dialogue;
 import org.dongguk.vsa.mulmoori.dialogue.domain.type.EDialogueStatus;
 import org.dongguk.vsa.mulmoori.dialogue.dto.request.UpdateAnswerInDialogueRequestDto;
@@ -32,6 +33,7 @@ public class UpdateAnswerInDialogueService implements UpdateAnswerInDialogueUseC
 
     private final DialogueRepository dialogueRepository;
 
+    private final AnalysisUtil analysisUtil;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
@@ -53,15 +55,18 @@ public class UpdateAnswerInDialogueService implements UpdateAnswerInDialogueUseC
             throw new CommonException(ErrorCode.ACCESS_DENIED);
         }
 
-        // 3. TODO: Update Logic
-        // 3.1. STT일 경우 교정이 필요하므로 HTTP 통신
-        // 3.2. 일반 텍스트일 경우 바로 업데이트
+        // 3. 답변 업데이트
         String finalAnswer = requestDto.answer();
 
         if (requestDto.isUsingStt()) {
-            // 3.1. STT일 경우 교정이 필요하므로 HTTP 통신
-            // 3.1.1. TODO: HTTP 통신 필요함
-            finalAnswer = requestDto.answer();
+            try {
+                finalAnswer = analysisUtil.preProcessSttText(
+                        dialogue.getQuestion(),
+                        requestDto.answer()
+                );
+            } catch (Exception e) {
+                throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+            }
         }
 
         dialogue.updateAnswer(
@@ -72,7 +77,7 @@ public class UpdateAnswerInDialogueService implements UpdateAnswerInDialogueUseC
 
         // 4. Update Answer In Dialogue Event 발행
         applicationEventPublisher.publishEvent(UpdateAnswerInDialogueEvent.builder()
-                .dialogueId(dialogue.getId())
+                .id(dialogue.getId())
                 .question(dialogue.getQuestion())
                 .answer(dialogue.getAnswer())
                 .build()

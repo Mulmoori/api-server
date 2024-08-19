@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dongguk.vsa.mulmoori.core.exception.error.ErrorCode;
 import org.dongguk.vsa.mulmoori.core.exception.type.CommonException;
 import org.dongguk.vsa.mulmoori.dialogue.domain.Dialogue;
+import org.dongguk.vsa.mulmoori.dialogue.domain.type.EDialogueStatus;
 import org.dongguk.vsa.mulmoori.dialogue.dto.response.DialogueOverviewListDto;
 import org.dongguk.vsa.mulmoori.dialogue.repository.DialogueRepository;
 import org.dongguk.vsa.mulmoori.dialogue.usecase.ReadDialogueOverviewListUseCase;
@@ -40,7 +41,10 @@ public class ReadDialogueOverviewListService implements ReadDialogueOverviewList
                 .orElseThrow(() -> new CommonException(ErrorCode.ACCESS_DENIED));
 
         // 3. 전체 대화 목록 조회
-        List<Dialogue> dialogues = dialogueRepository.findAllByNarooteo(narooteo);
+        List<Dialogue> dialogues = dialogueRepository.findAllByNarooteoAndStatusNotOrderByAskedAtDesc(
+                narooteo,
+                EDialogueStatus.PENDING
+        );
 
         // 반환
         return DialogueOverviewListDto.fromEntities(dialogues);
