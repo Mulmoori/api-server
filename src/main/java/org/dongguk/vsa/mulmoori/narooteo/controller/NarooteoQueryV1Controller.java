@@ -19,6 +19,6 @@ public class NarooteoQueryV1Controller {
     public ResponseDto<?> readNarooteoBriefs(
             @RequestParam("participationCode") String participationCode
     ) {
-
+        return ResponseDto.ok(readNarooteoBriefUseCase.execute(participationCode));
     }
 }
