@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record UpdateAnswerInDialogueEvent(
-        Long dialogueId,
+        Long id,
         String question,
         String answer
 ) {
