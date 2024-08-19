@@ -15,7 +15,7 @@ public class DialogueQueryV1Controller {
 
     private final ReadDialogueDetailUseCase readDialogueDetailUseCase;
 
-    @PostMapping("/{dialogueId}")
+    @GetMapping("/{dialogueId}")
     public ResponseDto<?> readDialogueDetail(
             @AccountID UUID accountId,
             @PathVariable Long dialogueId
