@@ -23,13 +23,60 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    archiveFileName.set "application.jar"
+}
+
+jar {
+    enabled = false
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Spring Boot Default
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // Spring Boot Mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.75'
+    implementation 'commons-io:commons-io:2.7'
+
+    // Spring Boot Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Spring Boot Data
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // RabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-reactor-netty:3.2.3'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // Sentry
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.9.0'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // MYSQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Testing Dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
