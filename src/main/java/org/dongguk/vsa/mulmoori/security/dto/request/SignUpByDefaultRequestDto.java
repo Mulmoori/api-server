@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record SignUpByDefaultRequestDto(
+        @JsonProperty("temporary_token")
+        @NotBlank(message = "임시 토큰을 입력해주세요.")
+        String temporaryToken,
+
         @JsonProperty("nickname")
         @NotBlank(message = "닉네임을 입력해주세요.")
         @Pattern(regexp = "^[a-zA-Z0-9가-힣]*$", message = "닉네임은 한글, 영어, 숫자만 입력 가능합니다.")

@@ -37,12 +37,12 @@ public class Constants {
             "/exchange",
 
             // Authentication/Authorization
-            "/auth/validations/email",
-            "/auth/validations/authentication-code",
-            "/auth/reissue/token",
-            "/auth/reissue/password",
-            "/auth/sign-up",
-            "/auth/login",
+            "/api/auth/validations/email",
+            "/api/auth/validations/authentication-code",
+            "/api/auth/reissue/token",
+            "/api/auth/reissue/password",
+            "/api/auth/sign-up",
+            "/api/auth/login",
 
             // Swagger
             "/api-docs.html",
@@ -65,7 +65,7 @@ public class Constants {
      * 사용자 URL
      */
     public static List<String> USER_URLS = List.of(
-            "/v1/**"
+            "/api/**"
     );
 }
 
