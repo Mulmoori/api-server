@@ -11,6 +11,7 @@ import org.dongguk.vsa.mulmoori.security.domain.type.ESecurityProvider;
 import org.dongguk.vsa.mulmoori.security.domain.type.ESecurityRole;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class User extends Account {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Dialogue> dialogues = new ArrayList<>();
+
+    /* -------------------------------------------- */
+    /* Timestamp Column --------------------------- */
+    /* -------------------------------------------- */
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDate createdAt;
 
     /* -------------------------------------------- */
     /* Methods ------------------------------------ */
