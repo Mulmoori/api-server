@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import org.dongguk.vsa.mulmoori.core.annotation.validation.DateValue;
 import org.dongguk.vsa.mulmoori.core.dto.SelfValidating;
+import org.dongguk.vsa.mulmoori.core.utility.DateTimeUtil;
 import org.dongguk.vsa.mulmoori.narooteo.domain.Narooteo;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +45,7 @@ public class NarooteoOverviewListDto extends SelfValidating<NarooteoOverviewList
     }
 
 
+    @Getter
     public static class NarooteoOverviewDto extends SelfValidating<NarooteoOverviewDto> {
 
         @JsonProperty("id")
@@ -60,17 +64,23 @@ public class NarooteoOverviewListDto extends SelfValidating<NarooteoOverviewList
         @NotNull
         private final Integer participantCount;
 
+        @JsonProperty("participated_at")
+        @DateValue
+        private final String participatedAt;
+
         @Builder
         public NarooteoOverviewDto(
                 Long id,
                 String title,
                 Boolean isConnectionHost,
-                Integer participantCount
+                Integer participantCount,
+                String participatedAt
         ) {
             this.id = id;
             this.title = title;
             this.isConnectionHost = isConnectionHost;
             this.participantCount = participantCount;
+            this.participatedAt = participatedAt;
         }
 
         public static NarooteoOverviewDto fromEntity(
@@ -78,11 +88,16 @@ public class NarooteoOverviewListDto extends SelfValidating<NarooteoOverviewList
                 Boolean isConnectionHost,
                 Integer participantCount
         ) {
+            String dateFormatted = "yyyy-MM-dd";
+
+            String participatedAt = DateTimeFormatter.ofPattern(dateFormatted).format(narooteo.getCreatedAt());
+
             return NarooteoOverviewDto.builder()
                     .id(narooteo.getId())
                     .title(narooteo.getTitle())
                     .isConnectionHost(isConnectionHost)
                     .participantCount(participantCount)
+                    .participatedAt(participatedAt)
                     .build();
         }
     }

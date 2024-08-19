@@ -70,15 +70,22 @@ public class Dialogue {
     public Dialogue(
             String question,
             User user,
-            Narooteo modeullak
+            Narooteo narooteo
     ) {
         this.question = question;
         this.status = EDialogueStatus.PENDING;
 
+        this.user = user;
+        this.narooteo = narooteo;
+
         this.askedAt = LocalDateTime.now();
     }
 
-    public void updateAnswer(String answer, Boolean isAnsweredByLlm, EDialogueStatus status) {
+    public void updateAnswer(
+            String answer,
+            Boolean isAnsweredByLlm,
+            EDialogueStatus status
+    ) {
         this.answer = answer;
         this.isAnsweredByLlm = isAnsweredByLlm;
         this.status = status;
