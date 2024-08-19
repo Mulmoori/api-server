@@ -1,14 +1,18 @@
-package org.dongguk.vsa.mulmoori.user.domain;
+package org.dongguk.vsa.mulmoori.user.domain.mysql;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.dongguk.vsa.mulmoori.dialogue.domain.Dialogue;
 import org.dongguk.vsa.mulmoori.security.domain.mysql.Account;
 import org.dongguk.vsa.mulmoori.security.domain.type.ESecurityProvider;
 import org.dongguk.vsa.mulmoori.security.domain.type.ESecurityRole;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +35,11 @@ public class User extends Account {
     /* -------------------------------------------- */
     /* One To Many Mapping ------------------------ */
     /* -------------------------------------------- */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserNarooteo> narootoes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Dialogue> dialogues = new ArrayList<>();
 
     /* -------------------------------------------- */
     /* Methods ------------------------------------ */
@@ -54,9 +63,5 @@ public class User extends Account {
     @Override
     public ESecurityRole getRole() {
         return ESecurityRole.USER;
-    }
-
-    public void updateNickname(String nickname) {
-        this.nickname = nickname;
     }
 }

@@ -17,7 +17,7 @@ import org.dongguk.vsa.mulmoori.security.repository.mysql.AccountRepository;
 import org.dongguk.vsa.mulmoori.security.repository.redis.RefreshTokenRepository;
 import org.dongguk.vsa.mulmoori.security.repository.redis.TemporaryTokenRepository;
 import org.dongguk.vsa.mulmoori.security.usecase.SignUpByDefaultUseCase;
-import org.dongguk.vsa.mulmoori.user.domain.User;
+import org.dongguk.vsa.mulmoori.user.domain.mysql.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
