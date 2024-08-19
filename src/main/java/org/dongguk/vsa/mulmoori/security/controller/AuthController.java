@@ -44,14 +44,10 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public void signUp(
-            HttpServletRequest request,
             HttpServletResponse response,
             @RequestBody @Valid SignUpByDefaultRequestDto requestDto
     ) throws IOException {
-        String temporaryToken = HeaderUtil.refineHeader(request, Constants.AUTHORIZATION_HEADER, Constants.BEARER_PREFIX)
-                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_HEADER_ERROR));
-
-        DefaultJsonWebTokenDto tokenDto = signUpByDefaultUseCase.execute(temporaryToken, requestDto);
+        DefaultJsonWebTokenDto tokenDto = signUpByDefaultUseCase.execute(requestDto);
 
         httpServletUtil.onSuccessBodyResponseWithJWTCookie(response, tokenDto);
     }
