@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.dongguk.vsa.mulmoori.narooteo.domain.Narooteo;
 import org.dongguk.vsa.mulmoori.user.domain.type.ENarooteoRole;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,6 +40,12 @@ public class UserNarooteo {
     private ENarooteoRole role;
 
     /* -------------------------------------------- */
+    /* Timestamp Column --------------------------- */
+    /* -------------------------------------------- */
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDate createdAt;
+
+    /* -------------------------------------------- */
     /* Many To One Mapping ------------------------ */
     /* -------------------------------------------- */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +55,7 @@ public class UserNarooteo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
+
 
     /* -------------------------------------------- */
     /* Methods ------------------------------------ */
@@ -60,5 +69,7 @@ public class UserNarooteo {
         this.role = role;
         this.user = user;
         this.narooteo = narooteo;
+
+        this.createdAt = LocalDate.now();
     }
 }

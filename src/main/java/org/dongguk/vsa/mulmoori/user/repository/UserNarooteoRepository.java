@@ -17,7 +17,7 @@ public interface UserNarooteoRepository extends JpaRepository<UserNarooteo, Long
     @EntityGraph(attributePaths = {"user"})
     Optional<UserNarooteo> findByNarooteoAndRole(Narooteo narooteo, ENarooteoRole role);
 
+    Optional<UserNarooteo> findByUserAndNarooteo(User requestUser, Narooteo narooteo);
+
     List<UserNarooteo> findByUser(User user);
-
-
 }
